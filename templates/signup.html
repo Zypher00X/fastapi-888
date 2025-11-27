@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <style>
+        .error { color: red; }
+        .strength { font-size: 0.9em; }
+        .strong { color: green; }
+        .weak { color: orange; }
+    </style>
+</head>
+<body>
+    <h2>Sign Up</h2>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form action="/signup" method="post">
+        <label>Email:</label>
+        <input type="email" name="email" required><br><br>
+
+        <label>Password:</label>
+        <input type="password" name="password" id="password" required>
+        <span id="strength" class="strength"></span><br><br>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <p>Already have an account? <a href="/login">Login</a></p>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const strengthText = document.getElementById('strength');
+
+        passwordInput.addEventListener('input', function() {
+            const pw = passwordInput.value;
+            let strength = "Weak";
+            let color = "orange";
+
+            if (pw.length >= 8 && /[A-Z]/.test(pw) && /[a-z]/.test(pw) && /\d/.test(pw) && /[^A-Za-z0-9]/.test(pw)) {
+                strength = "Strong";
+                color = "green";
+            }
+
+            strengthText.textContent = strength;
+            strengthText.style.color = color;
+        });
+    </script>
+</body>
+</html>
